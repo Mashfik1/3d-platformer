@@ -362,11 +362,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e037a46bb8aaae5468a1b472e7838024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSpeed: 1
+  normalSpeed: 10
+  sprintSpeed: 20
   groundChecker: {fileID: 180284389}
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  jumpForce: 300
+  jumpForce: 1134.71
+  maxSprint: 5
 --- !u!136 &1319029826
 CapsuleCollider:
   m_ObjectHideFlags: 0

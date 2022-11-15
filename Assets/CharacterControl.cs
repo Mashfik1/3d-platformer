@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class CharacterControl : MonoBehaviour
 {
-    float maxSpeed = 1.0f;
+    public float maxSpeed = 1.0f;
+    public float normalSpeed = 10.0f;
+    public float sprintSpeed = 20.0f;
+
     float rotation = 0.0f;
     float camRotation = 0.0f;
     GameObject cam;
@@ -18,8 +21,13 @@ public class CharacterControl : MonoBehaviour
     float rotationSpeed = 2.0f;
     float camRotationSpeed = 1.5f;
 
+    public float maxSprint = 5.0f;
+    float sprintTimer;
+
     private void Start()
     {
+        sprintTimer = maxSprint;
+
         cam = GameObject.Find("Main Camera");
         myRigidbody = GetComponent<Rigidbody>();
     }
@@ -32,6 +40,21 @@ public class CharacterControl : MonoBehaviour
         {
             myRigidbody.AddForce(transform.up * jumpForce);
         }
+
+        if (Input.GetKey(KeyCode.LeftShift) && sprintTimer > 0.0f)
+        {
+            maxSpeed = sprintSpeed;
+            sprintTimer = sprintTimer - Time.deltaTime;
+        } else
+        {
+            maxSpeed = normalSpeed;
+            if (Input.GetKey(KeyCode.LeftShift) == false)
+            {
+                sprintTimer = sprintTimer + Time.deltaTime;
+            }
+        }
+
+        sprintTimer = Mathf.Clamp(sprintTimer, 0.0f, maxSprint);
 
         Vector3 newVelocity = transform.forward * Input.GetAxis("Vertical") * maxSpeed;
         myRigidbody.velocity = new Vector3(newVelocity.x, myRigidbody.velocity.y, newVelocity.z);
