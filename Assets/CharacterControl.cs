@@ -26,6 +26,7 @@ public class CharacterControl : MonoBehaviour
 
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         sprintTimer = maxSprint;
 
         cam = GameObject.Find("Main Camera");
@@ -41,6 +42,7 @@ public class CharacterControl : MonoBehaviour
             myRigidbody.AddForce(transform.up * jumpForce);
         }
 
+
         if (Input.GetKey(KeyCode.LeftShift) && sprintTimer > 0.0f)
         {
             maxSpeed = sprintSpeed;
@@ -54,7 +56,7 @@ public class CharacterControl : MonoBehaviour
             }
         }
 
-        sprintTimer = Mathf.Clamp(sprintTimer, 0.0f, maxSprint);
+              sprintTimer = Mathf.Clamp(sprintTimer, 0.0f, maxSprint);
 
         Vector3 newVelocity = transform.forward * Input.GetAxis("Vertical") * maxSpeed;
         myRigidbody.velocity = new Vector3(newVelocity.x, myRigidbody.velocity.y, newVelocity.z);
@@ -63,6 +65,9 @@ public class CharacterControl : MonoBehaviour
         transform.rotation = Quaternion.Euler(new Vector3(0.0f, rotation, 0.0f));
 
         camRotation = camRotation + Input.GetAxis("Mouse Y") * camRotationSpeed;
+
+        camRotation = Mathf.Clamp(camRotation, -40.0f, 40.0f);
+
         cam.transform.localRotation = Quaternion.Euler(new Vector3(camRotation, 0.0f, 0.0f));
     }
 }
